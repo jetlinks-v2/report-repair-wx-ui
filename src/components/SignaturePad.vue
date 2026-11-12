@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {Button as VanButton} from 'vant'
 import {onMounted,ref} from 'vue'
 const emit=defineEmits<{capture:[file:File]}>(),canvas=ref<HTMLCanvasElement>();let drawing=false,last:{x:number;y:number}|undefined,hasInk=false
 const point=(e:PointerEvent)=>{const c=canvas.value!,r=c.getBoundingClientRect();return{x:(e.clientX-r.left)*c.width/r.width,y:(e.clientY-r.top)*c.height/r.height}}

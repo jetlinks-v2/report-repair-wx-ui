@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import MobilePopup from './mobile/MobilePopup.vue'
 defineProps<{preview?:{url:string;type:string;name:string}}>()
 defineEmits<{close:[]}>()
 </script>

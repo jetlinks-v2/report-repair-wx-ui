@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {Button as VanButton} from 'vant'
 defineProps<{ids:string[];names:Record<string,string>;loading:boolean;disabled?:boolean;single?:boolean}>()
 const emit=defineEmits<{files:[files:File[]];remove:[id:string];preview:[id:string]}>()
 const changed=(event:Event)=>{const input=event.target as HTMLInputElement;emit('files',Array.from(input.files||[]));input.value=''}

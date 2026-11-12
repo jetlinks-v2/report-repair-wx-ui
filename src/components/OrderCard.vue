@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {Button as VanButton} from 'vant'
 import type {Order} from '../types'
 import {time,reviewNames,actionNames} from '../services/labels'
 import StatusTag from './StatusTag.vue'

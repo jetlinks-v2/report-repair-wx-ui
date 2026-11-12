@@ -1,12 +1,22 @@
 <script setup lang="ts">
+import MobileLoading from '../components/mobile/MobileLoading.vue'
+import MobileNotice from '../components/mobile/MobileNotice.vue'
+import SelectField from '../components/mobile/SelectField.vue'
+import BusinessField from '../components/mobile/BusinessField.vue'
+import BusinessForm from '../components/mobile/BusinessForm.vue'
+import {Button as VanButton} from 'vant'
+import {Field as VanField} from 'vant'
+import {Radio as VanRadio} from 'vant'
+import {RadioGroup as VanRadioGroup} from 'vant'
 import {reactive} from 'vue'
 import {useIntake} from '../hooks/useIntake'
 import MediaInput from '../components/MediaInput.vue'
 import MediaPreview from '../components/MediaPreview.vue'
 import OrderSteps from '../components/OrderSteps.vue'
-const model=useIntake(),formRef=model.formRef,vm=reactive(model)
+const model=useIntake(),vm=reactive(model)
+function setForm(instance:unknown){model.formRef.value=instance as typeof model.formRef.value}
 </script>
-<template><section class="page form-page"><OrderSteps /><MobileNotice v-if="vm.error" :message="vm.error" type="error" show-icon /><BusinessForm ref="formRef" :model="vm.input" :rules="vm.rules" layout="horizontal" @submit="vm.submit"><div class="source-tabs"><van-radio-group v-model="vm.input.reportSource"><van-radio :name="1">物业自查</van-radio><van-radio :name="2">业主报事</van-radio></van-radio-group></div><div class="panel form-card"><h2>报事信息</h2>
+<template><section class="page form-page"><OrderSteps /><MobileNotice v-if="vm.error" :message="vm.error" type="error" show-icon /><BusinessForm :ref="setForm" :model="vm.input" :rules="vm.rules" layout="horizontal" @submit="vm.submit"><div class="source-tabs"><van-radio-group v-model="vm.input.reportSource"><van-radio :name="1">物业自查</van-radio><van-radio :name="2">业主报事</van-radio></van-radio-group></div><div class="panel form-card"><h2>报事信息</h2>
 
  <BusinessField label="业务项目" name="businessProjectId"><SelectField v-model="vm.input.businessProjectId" :options="vm.projectOptions" placeholder="请选择业务项目" show-search option-filter-prop="label" /></BusinessField>
  <MobileLoading :loading="vm.loading"><BusinessField label="报事分类" name="categoryId"><SelectField v-model="vm.path" :options="vm.tree" placeholder="请选择第三级分类"  tree /></BusinessField>

@@ -1,6 +1,5 @@
 import {ref,onBeforeUnmount} from 'vue'
 import * as api from '../api/repair'
-import {state} from '../services/session'
 import {errorText,fileBlob} from '../api/http'
 export function useMedia(onError:(message:string)=>void){
  const uploading=ref(false),preview=ref<{url:string;type:string;name:string}>(),names=ref<Record<string,string>>({})

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {Step as VanStep} from 'vant'
+import {Steps as VanSteps} from 'vant'
 import {computed} from 'vue'
 const props=defineProps<{status?:number}>()
 const current=computed(()=>props.status===undefined?0:props.status===0?1:[2,4,5].includes(props.status)?3:2)

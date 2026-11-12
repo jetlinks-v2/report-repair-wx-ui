@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import MobileLoading from '../components/mobile/MobileLoading.vue'
+import MobileNotice from '../components/mobile/MobileNotice.vue'
+import {Button as VanButton} from 'vant'
+import {Step as VanStep} from 'vant'
+import {Steps as VanSteps} from 'vant'
 import {reactive} from 'vue'
 import {useOrderDetail} from '../hooks/useOrderDetail'
 import {actionNames,reviewNames,time,money,urgencyName} from '../services/labels'

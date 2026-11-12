@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {Button as VanButton} from 'vant'
 import {useRoute,useRouter} from 'vue-router'
 import {computed} from 'vue'
 import {HomeOutlined,UnorderedListOutlined,PlusOutlined,UserOutlined,TeamOutlined,CarryOutOutlined,LeftOutlined} from './components/mobile/icons'
@@ -7,7 +8,7 @@ import {actionNames} from './services/labels'
 const route=useRoute(),router=useRouter()
 const login=computed(()=>route.path==='/login'),home=computed(()=>route.path==='/'),detail=computed(()=>!['/','/orders','/profile','/login'].includes(route.path))
 const title=computed(()=>route.path==='/create'?'发起报事':route.params.action?actionNames[String(route.params.action)]||'处理工单':route.params.id?'工单详情':route.path==='/profile'?'我的':({pool:'工单池',todo:'我的待办',related:'与我相关',paid:'有偿报事',review:'报事审核',warning:'物业预警',unfinished:'未完成报事'}[String(route.query.mode||'pool')]||'工单池'))
-function back(){if(window.history.state?.back)router.back();else void router.replace('/')}
+function back(){if(router.options.history.state.back)router.back();else void router.replace('/')}
 </script>
 <template>
  <div class="app-shell">

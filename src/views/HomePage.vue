@@ -1,4 +1,13 @@
 <script setup lang="ts">
+import MobileLoading from '../components/mobile/MobileLoading.vue'
+import MobileNotice from '../components/mobile/MobileNotice.vue'
+import SelectField from '../components/mobile/SelectField.vue'
+import MobilePopup from '../components/mobile/MobilePopup.vue'
+import BusinessField from '../components/mobile/BusinessField.vue'
+import BusinessForm from '../components/mobile/BusinessForm.vue'
+import DateField from '../components/mobile/DateField.vue'
+import {Button as VanButton} from 'vant'
+import {Skeleton as VanSkeleton} from 'vant'
 import {reactive,ref,computed} from 'vue'
 import dayjs from 'dayjs'
 import {CalendarOutlined,DownOutlined,ArrowRightOutlined,ClockCircleOutlined,AccountBookOutlined,AuditOutlined,AlertOutlined,UserOutlined} from '../components/mobile/icons'
@@ -20,7 +29,7 @@ const dateValid=computed(()=>draftStart.value&&draftEnd.value&&draftStart.value<
    <MobileNotice v-if="vm.error" :message="vm.error" type="error" show-icon><template #action><van-button size="small" @click="vm.load" native-type="button">重试</van-button></template></MobileNotice>
    <MobileLoading :loading="vm.loading"><template v-if="vm.metrics">
     <button class="summary-panel" @click="vm.go('pool')">
-     <img class="summary-bg" src="/images/report/summary-bg-mp.png" alt=""><img class="summary-icon" src="/images/report/summary-icon.png" alt="">
+     <img class="summary-bg" src="../assets/images/report/summary-bg-mp.png" alt=""><img class="summary-icon" src="../assets/images/report/summary-icon.png" alt="">
      <div><span>报事量</span><strong>{{vm.metrics.total}}</strong></div><div><span>报事完成率</span><strong>{{vm.completionRate}}<small>%</small></strong></div>
     </button>
     <div class="metric-grid">
@@ -30,7 +39,7 @@ const dateValid=computed(()=>draftStart.value&&draftEnd.value&&draftStart.value<
      <button class="metric" @click="vm.go('warning')"><i><AlertOutlined /></i><div><span>物业预警</span><strong>{{vm.metrics.warning}}</strong></div></button>
     </div>
    </template><van-skeleton v-else-if="vm.loading" active /></MobileLoading>
-   <router-link v-if="can('create')" class="create-banner" to="/create"><img src="/images/report/cta-bg-mp.png" alt=""><div><strong>发起报事</strong><span>前往 <ArrowRightOutlined /></span></div></router-link>
+   <router-link v-if="can('create')" class="create-banner" to="/create"><img src="../assets/images/report/cta-bg-mp.png" alt=""><div><strong>发起报事</strong><span>前往 <ArrowRightOutlined /></span></div></router-link>
    <div class="quick-links"><router-link to="/orders?mode=pool">工单池 <ArrowRightOutlined /></router-link><router-link to="/orders?mode=todo">我的待办 <ArrowRightOutlined /></router-link><router-link to="/orders?mode=related">与我相关 <ArrowRightOutlined /></router-link></div>
   </div>
   <MobilePopup v-model:show="projectOpen" title="选择业务项目" class="mobile-drawer"><SelectField v-model="vm.state.projectId" aria-label="当前业务项目" clearable show-search option-filter-prop="label" placeholder="全部授权项目" :options="vm.projects.map(p=>({value:p.id,label:name(p)}))" style="width:100%" /><van-button type="primary" block class="drawer-confirm" @click="projectOpen=false" native-type="button">确定</van-button></MobilePopup>
