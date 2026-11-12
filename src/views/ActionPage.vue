@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {ToolOutlined} from '../components/mobile/icons'
 import MobileLoading from '../components/mobile/MobileLoading.vue'
 import MobileNotice from '../components/mobile/MobileNotice.vue'
 import SelectField from '../components/mobile/SelectField.vue'
@@ -24,7 +25,7 @@ const model=useAction(),vm=reactive(model)
 function setForm(instance:unknown){model.formRef.value=instance as typeof model.formRef.value}
 </script>
 <template><section class="page form-page"><MobileNotice v-if="vm.error" :message="vm.error" type="error" show-icon /><MobileLoading :loading="vm.loading"><template v-if="vm.order"><OrderSteps :status="vm.order.status" /><div class="order-context"><strong>{{vm.order.number}}</strong><p>{{vm.order.description||vm.order.title}}</p></div>
- <BusinessForm :ref="setForm" :model="vm.input" :rules="vm.rules" layout="horizontal" @submit="vm.save"><div class="panel form-card"><h2>{{actionNames[vm.action]}}信息</h2>
+ <BusinessForm :ref="setForm" :model="vm.input" :rules="vm.rules" layout="horizontal" @submit="vm.save"><div class="panel form-card"><h2 class="icon-heading"><ToolOutlined />{{actionNames[vm.action]}}信息</h2>
  <BusinessField v-if="['finish','quote','close'].includes(vm.action)" label="关单类型"><SelectField :model-value="vm.action==='close'?'close':'finish'" :disabled="vm.order.paid||vm.readOnly" :options="[{value:'finish',label:'正常关单'},...can('close')?[{value:'close',label:'非正常关单'}]:[]]" @change="vm.changeType" /></BusinessField>
  <template v-if="vm.action==='quote'||vm.action==='finish'&&vm.order.paid"><BusinessField label="材料费" :name="vm.action==='quote'?'materialAmount':undefined"><van-stepper v-model="vm.input.materialAmount" :min="0" :precision="2" :disabled="vm.action==='finish'" /></BusinessField><BusinessField label="人工费" :name="vm.action==='quote'?'artificialAmount':undefined"><van-stepper v-model="vm.input.artificialAmount" :min="0" :precision="2" :disabled="vm.action==='finish'" /></BusinessField><p>合计费用：¥ {{money(Number(vm.input.materialAmount||0)+Number(vm.input.artificialAmount||0))}}</p></template>
  <BusinessField v-if="['dispatch','transfer'].includes(vm.action)" label="责任人" name="assignedUserId"><SelectField v-model="vm.input.assignedUserId" :options="vm.peopleOptions" show-search option-filter-prop="label" placeholder="选择获授权的维修员工" /></BusinessField>

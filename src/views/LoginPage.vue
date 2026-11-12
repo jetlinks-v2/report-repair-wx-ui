@@ -9,7 +9,7 @@ import {useSession} from '../hooks/useSession'
 import LoginVerification from '../components/LoginVerification.vue'
 const vm=reactive(useSession())
 </script>
-<template><section class="login-page"><div class="login-brand">报事报修<span>员工工作台</span></div><div class="panel"><h1>应用登录</h1><p class="muted">使用当前应用的账号和密码登录</p><MobileNotice v-if="vm.error" :message="vm.error" type="error" show-icon /><BusinessForm layout="vertical" :model="vm.form" @submit="vm.login">
+<template><section class="login-page"><div class="login-hero"><div class="login-brand">报事报修<span>员工工作台</span><p>及时响应 · 用心服务</p></div><img src="../assets/images/report/repair-toolkit.svg" alt="" fetchpriority="high" /></div><div class="panel"><h1>欢迎使用</h1><p class="muted">使用当前应用的账号和密码登录</p><MobileNotice v-if="vm.error" :message="vm.error" type="error" show-icon /><BusinessForm layout="vertical" :model="vm.form" @submit="vm.login">
  
  <BusinessField label="应用账号" name="username" :rules="[{required:true,whitespace:true,message:'请输入应用账号'}]"><van-field v-model="vm.form.username" placeholder="请输入应用账号" autocomplete="username" :disabled="vm.loading" /></BusinessField>
  <BusinessField label="密码" name="password" :rules="[{required:true,message:'请输入密码'}]"><van-field v-model="vm.form.password" autocomplete="current-password" :disabled="vm.loading"  type="password" /></BusinessField>

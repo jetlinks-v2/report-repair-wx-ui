@@ -56,6 +56,13 @@ try{
   await snap(page,'home',width);await noOverflow(page)
   if(APP==='repair'){
    await page.locator('.date-row').click();await page.locator('.mobile-popup:visible').first().locator('input[placeholder="请选择日期"]').first().click();await page.locator('.van-picker').waitFor();await page.locator('.mobile-popup:visible').last().getByRole('button',{name:'确定',exact:true}).click();await page.locator('.mobile-popup:visible').first().getByRole('button',{name:'确定',exact:true}).click()
+   await page.goto(origin+BASE+'?applicationScope=app-a#/orders?mode=pool&status=5&keyword=照明&start=2026-11-01&end=2026-11-07')
+   await page.getByRole('tab',{name:'全部工单',exact:true}).waitFor()
+   for(const [label,termType] of [['我的待办','repair-todo'],['与我相关','repair-related']]){
+    const [response]=await Promise.all([page.waitForResponse(r=>r.url().includes('/repair/orders/_query')&&r.request().postDataJSON()?.terms?.some(t=>t.termType===termType)),page.getByRole('tab',{name:label,exact:true}).click()])
+    const query=response.request().postDataJSON();assert.ok(query.terms.some(t=>t.column==='createTime'));assert.ok(page.url().includes('status=-1'))
+   }
+   await noOverflow(page)
    await page.goto(origin+BASE+'?applicationScope=app-a#/create');await page.getByText('报事信息',{exact:true}).waitFor();await page.locator('input[placeholder="请选择业务项目"]').click();await page.locator('.selection-options').getByText('测试项目',{exact:true}).click();await page.locator('.mobile-popup:visible').last().getByRole('button',{name:'确定',exact:true}).click();assert.equal(await page.locator('input[placeholder="请选择业务项目"]').inputValue(),'测试项目')
    await page.getByRole('button',{name:'提交报事',exact:true}).click();assert.equal(calls.some(call=>call.path==='/repair/orders'&&call.method==='POST'),false)
   }else if(APP==='quality'){
